@@ -1,4 +1,4 @@
-package com.example.project.ui.data.songs
+package com.example.project.data.songs
 
 import kotlinx.serialization.SerialName
 

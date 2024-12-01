@@ -1,6 +1,6 @@
-package com.example.project.ui.di
+package com.example.project.di
 
-import com.example.project.ui.network.SpotifyApiService
+import com.example.project.network.SpotifyApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

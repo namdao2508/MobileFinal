@@ -1,6 +1,6 @@
-package com.example.project.ui.network
+package com.example.project.network
 
-import com.example.project.ui.data.songs.SongsResponse
+import com.example.project.data.songs.SongsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

@@ -21,6 +21,17 @@ coil="2.1.0"
 generativeai="0.2.0"
 androidxRoom = "2.6.1"
 spotify= "1.2.5"
+firebaseAuthKtx = "23.1.0"
+firebaseFirestore = "25.1.1"
+accompanist="0.33.2-alpha"
+firebaseStorage = "21.0.1"
+zoomable="1.6.2"
+firebaseCrashlytics = "19.2.1"
+googleFirebaseCrashlytics = "3.0.2"
+foundationLayoutAndroid = "1.6.6"
+googleGmsGoogleServices = "4.4.2"
+firebaseAuth = "23.1.0"
+navigationRuntimeKtx = "2.7.7"
 androidthings = "1.0"
 
 [libraries]
@@ -58,6 +69,13 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidthings = { group = "com.google.android.things", name = "androidthings", version.ref = "androidthings" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
+
 
 
 [plugins]
@@ -69,5 +87,8 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
+
 
 

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.compose.ui.graphics.colorspace.Connector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.project.ui.network.SpotifyApiService
+import com.example.project.network.SpotifyApiService
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.android.things.bluetooth.ConnectionParams
 import dagger.hilt.android.lifecycle.HiltViewModel
