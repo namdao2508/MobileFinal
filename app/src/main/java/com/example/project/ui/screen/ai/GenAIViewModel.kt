@@ -24,52 +24,52 @@ class GenAIViewModel @Inject constructor(
     private val _textGenerationResult = MutableStateFlow<String?>(null)
     val textGenerationResult = _textGenerationResult.asStateFlow()
 
-    private val _spotifyConnectionStatus = MutableStateFlow("Disconnected")
-    val spotifyConnectionStatus = _spotifyConnectionStatus.asStateFlow()
-
-    private var spotifyAppRemote: SpotifyAppRemote? = null
-
-    private val CLIENT_ID = "YOUR_SPOTIFY_CLIENT_ID"
-    private val REDIRECT_URI = "YOUR_APP_REDIRECT_URI"
-
-    // Connect to Spotify
-    fun connectToSpotify() {
-        val connectionParams = ConnectionParams.Builder(CLIENT_ID)
-            .setRedirectUri(REDIRECT_URI)
-            .showAuthView(true)
-            .build()
-
-        SpotifyAppRemote.connect(context, connectionParams, object : Connector.ConnectionListener {
-            override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
-                this@GenAIViewModel.spotifyAppRemote = spotifyAppRemote
-                _spotifyConnectionStatus.value = "Connected to Spotify"
-            }
-
-            override fun onFailure(throwable: Throwable) {
-                _spotifyConnectionStatus.value = "Failed to connect: ${throwable.message}"
-            }
-        })
-    }
-
-    // Disconnect from Spotify
-    fun disconnectFromSpotify() {
-        spotifyAppRemote?.let {
-            SpotifyAppRemote.disconnect(it)
-            spotifyAppRemote = null
-            _spotifyConnectionStatus.value = "Disconnected"
-        }
-    }
-
-    // Play a song using Spotify
-    fun playSong(songUri: String) {
-        spotifyAppRemote?.playerApi?.play(songUri)?.setResultCallback {
-            _textGenerationResult.value = "Playing song..."
-        }?.setErrorCallback {
-            _textGenerationResult.value = "Error playing song: ${it.message}"
-        } ?: run {
-            _textGenerationResult.value = "Spotify not connected"
-        }
-    }
+//    private val _spotifyConnectionStatus = MutableStateFlow("Disconnected")
+//    val spotifyConnectionStatus = _spotifyConnectionStatus.asStateFlow()
+//
+//    private var spotifyAppRemote: SpotifyAppRemote? = null
+//
+//    private val CLIENT_ID = "YOUR_SPOTIFY_CLIENT_ID"
+//    private val REDIRECT_URI = "YOUR_APP_REDIRECT_URI"
+//
+//    // Connect to Spotify
+//    fun connectToSpotify() {
+//        val connectionParams = ConnectionParams.Builder(CLIENT_ID)
+//            .setRedirectUri(REDIRECT_URI)
+//            .showAuthView(true)
+//            .build()
+//
+//        SpotifyAppRemote.connect(context, connectionParams, object : Connector.ConnectionListener {
+//            override fun onConnected(spotifyAppRemote: SpotifyAppRemote) {
+//                this@GenAIViewModel.spotifyAppRemote = spotifyAppRemote
+//                _spotifyConnectionStatus.value = "Connected to Spotify"
+//            }
+//
+//            override fun onFailure(throwable: Throwable) {
+//                _spotifyConnectionStatus.value = "Failed to connect: ${throwable.message}"
+//            }
+//        })
+//    }
+//
+//    // Disconnect from Spotify
+//    fun disconnectFromSpotify() {
+//        spotifyAppRemote?.let {
+//            SpotifyAppRemote.disconnect(it)
+//            spotifyAppRemote = null
+//            _spotifyConnectionStatus.value = "Disconnected"
+//        }
+//    }
+//
+//    // Play a song using Spotify
+//    fun playSong(songUri: String) {
+//        spotifyAppRemote?.playerApi?.play(songUri)?.setResultCallback {
+//            _textGenerationResult.value = "Playing song..."
+//        }?.setErrorCallback {
+//            _textGenerationResult.value = "Error playing song: ${it.message}"
+//        } ?: run {
+//            _textGenerationResult.value = "Spotify not connected"
+//        }
+//    }
 
     // Generate AI Recommendations
     fun generateAI(mood: String) {

@@ -138,7 +138,8 @@ fun GenAIScreen(
 
                     Button(
                         onClick = {
-                            viewModel.searchSongs(query = searchQuery.value)
+                            viewModel.searchSongs(query = searchQuery.value,
+                                accessToken = "YOUR_ACCESS_TOKEN")
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
