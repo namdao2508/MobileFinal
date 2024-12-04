@@ -1,4 +1,3 @@
 package com.example.project.data.database
 
-class users {
-}
+class users

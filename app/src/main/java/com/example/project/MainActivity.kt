@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.project.ui.screen.MainScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 //class MainActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +31,6 @@ import com.example.project.ui.screen.MainScreen
 //        setContent {
 //            ProjectTheme {
 //                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    NavGraph(
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
 //                    GenAIScreen(
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
@@ -44,7 +42,7 @@ import com.example.project.ui.screen.MainScreen
 
 
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

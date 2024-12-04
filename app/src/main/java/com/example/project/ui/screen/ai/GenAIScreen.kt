@@ -33,12 +33,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenAIScreen(
-    viewModel: GenAIViewModel = viewModel(),
+    viewModel: GenAIViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     // State to control which screen is currently displayed

@@ -1,4 +1,3 @@
 package com.example.project.data.database
 
-class AppDatabase {
-}
+class AppDatabase

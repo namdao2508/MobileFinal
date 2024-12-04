@@ -1,6 +1,6 @@
 [versions]
 agp = "8.6.0"
-kotlin = "1.9.0"
+kotlin = "2.0.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -36,7 +36,7 @@ androidthings = "1.0"
 
 [libraries]
 generativeai = {group="com.google.ai.client.generativeai", name="generativeai", version.ref="generativeai"}
-spotify = {group = "com.spotify.android", name = "spotify", version.ref = "spotify"}
+#spotify = {group = "com.spotify.android", name = "spotify", version.ref = "spotify"}
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

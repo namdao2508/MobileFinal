@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.compose)
 
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
@@ -103,7 +103,7 @@ dependencies {
     implementation(libs.coil)
 
     //Spotify
-    implementation(libs.spotify)
+//    implementation(libs.spotify)
 
     //Firebase
     implementation(libs.firebase.auth)
