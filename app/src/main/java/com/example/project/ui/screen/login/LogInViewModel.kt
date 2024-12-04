@@ -1,5 +1,6 @@
 package com.example.project.ui.screen.login
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -36,6 +37,8 @@ class LogInViewModel @Inject constructor() : ViewModel() {
             // Mock login validation
             if (email == "user@example.com" && password == "password123") {
                 loginMessage = "Login successful!"
+                Log.d("LogInViewModel", "Login successful!")  // Add log message for debugging
+
             } else {
                 loginMessage = "Invalid email or password."
             }

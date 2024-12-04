@@ -1,5 +1,6 @@
 package com.example.project.ui.screen.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -23,12 +28,23 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun LogInScreen(
     modifier: Modifier = Modifier,
-    viewModel: LogInViewModel = hiltViewModel()
+    viewModel: LogInViewModel = hiltViewModel(),
+    onLoginSuccess: () -> Unit = {}
 ) {
     val email = viewModel.email
     val password = viewModel.password
     val isLoading = viewModel.isLoading
-    val loginMessage = viewModel.loginMessage
+    val loginMessage = viewModel.loginMessage // Observe loginMessage
+
+    Log.d("LogInScreen", "loginMessage: $loginMessage")  // Log the current state of loginMessage
+
+    // Observe the loginMessage state to navigate after successful login
+    LaunchedEffect(loginMessage) {
+        if (loginMessage == "Login successful!") {
+            Log.d("LogInScreen", "Navigating to Main screen")  // Log for debugging navigation
+            onLoginSuccess() // Trigger navigation once login is successful
+        }
+    }
 
     Column(
         modifier = Modifier

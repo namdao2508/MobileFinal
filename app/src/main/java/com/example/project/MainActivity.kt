@@ -71,10 +71,9 @@ fun NavGraph(
     ) {
         composable(Screen.Login.route) {
             LogInScreen(
-//                onLoginSuccess = {
-//                    navController.navigate(Screen.Messages.route)
-//                }
-//                    navController.navigate(Screen.Main.route)
+                onLoginSuccess = {
+                    navController.navigate(Screen.Main.route)
+                }
             )
         }
         composable(Screen.Main.route) {
