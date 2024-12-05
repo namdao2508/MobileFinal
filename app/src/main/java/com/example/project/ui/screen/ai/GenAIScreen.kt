@@ -40,7 +40,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun GenAIScreen(
     viewModel: GenAIViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit = {}
 ) {
     // State to control which screen is currently displayed
     var currentScreen by rememberSaveable { mutableStateOf("main") }
@@ -65,6 +66,7 @@ fun GenAIScreen(
                                     mood.value = ""
                                     searchQuery.value = ""
                                 }
+                                onBack()
                             },
                             modifier = Modifier.align(Alignment.CenterStart)
                         ) {

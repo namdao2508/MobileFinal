@@ -77,7 +77,11 @@ fun NavGraph(
             )
         }
         composable(Screen.Main.route) {
-            MainScreen()
+            MainScreen(
+                onAddPost = {
+                    navController.navigate(Screen.GenAI.route)
+                }
+            )
         }
 
 //        composable(Screen.Messages.route) {
@@ -91,7 +95,11 @@ fun NavGraph(
 //            WriteMessageScreen()
 //        }
         composable(Screen.GenAI.route) {
-            GenAIScreen()
+            GenAIScreen(
+                onBack = {
+                    navController.navigate(Screen.Main.route)
+                }
+            )
         }
     }
 }

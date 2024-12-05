@@ -55,7 +55,7 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun MainScreen(
 //    messagesViewModel: MessagesViewModel = viewModel(),
-    onWriteMessageClick: () -> Unit = {}
+    onAddPost: () -> Unit = {}
 ) {
 //    val postListState = messagesViewModel.postsList().collectAsState(
 //        initial = MessagesUIState.Init)
@@ -81,7 +81,7 @@ fun MainScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    onWriteMessageClick()
+                    onAddPost()
                 }
             ) {
                 Icon(
