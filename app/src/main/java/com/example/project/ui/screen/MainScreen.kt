@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,17 +48,17 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.project.data.songs.Song
+import com.example.project.ui.screen.ai.Post
 import com.example.project.ui.screen.ai.SongCard
 import com.google.firebase.auth.FirebaseAuth
 //import hu.bme.aut.aitforum.data.Post
 //import net.engawapg.lib.zoomable.rememberZoomState
 //import net.engawapg.lib.zoomable.zoomable
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    selectedSongs: List<Song> = listOf(),
+    posts: List<Post> = listOf(),
     onAddPost: () -> Unit = {},
     onProfile: () -> Unit = {},
     onSongClick: (Song) -> Unit = {}
@@ -119,20 +120,20 @@ fun MainScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            if (selectedSongs.isNotEmpty()) {
+            if (posts.isNotEmpty()) {
                 Text(
-                    text = "Selected Songs:",
+                    text = "Posts:",
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(selectedSongs) { song ->
-                        SongCard(song = song, onClick = {})
+                    items(posts) { post ->
+                        PostCard(post = post) // Custom PostCard to display title, body, and song info
                     }
                 }
             } else {
                 Text(
-                    text = "Select a song to view details.",
+                    text = "No posts available.",
                     modifier = Modifier.padding(16.dp)
                 )
             }
@@ -140,8 +141,17 @@ fun MainScreen(
     }
 }
 
-
-
-
-
-
+@Composable
+fun PostCard(post: Post) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(8.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = post.title, style = MaterialTheme.typography.bodyLarge)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = post.body)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Song: ${post.song.title} by ${post.song.artist}")
+        }
+    }
+}

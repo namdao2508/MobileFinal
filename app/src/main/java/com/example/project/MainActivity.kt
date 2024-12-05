@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 //import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import com.example.project.ui.screen.ai.GenAIScreen
@@ -22,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.project.ui.screen.MainScreen
+import com.example.project.ui.screen.ai.Post
 import com.example.project.ui.screen.profile.ProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -65,6 +70,9 @@ fun NavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
+
+    var posts by rememberSaveable { mutableStateOf<List<Post>>(emptyList()) }
+
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -97,6 +105,13 @@ fun NavGraph(
                 },
                 onProfile = {
                     navController.navigate(Screen.Profile.route)
+                },
+                onPostCreated = { newPost ->
+                    // Add the new post to the list of posts
+                    posts = posts + newPost
+
+                    // Navigate to the MainScreen after post is created
+                    navController.navigate(Screen.Main.route)
                 }
             )
         }

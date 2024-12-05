@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -31,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -55,13 +57,14 @@ fun GenAIScreen(
     onBack: () -> Unit = {},
     onHome: () -> Unit = {},
     onProfile: () -> Unit = {},
-    onSongSelected: (Song) -> Unit = {}
+    onPostCreated: (Post) -> Unit = {} // Callback to send created post to MainScreen
 ) {
-    // State to control which screen is currently displayed
     var currentScreen by rememberSaveable { mutableStateOf("main") }
     var textResult = viewModel.textGenerationResult.collectAsState().value
     var mood = rememberSaveable { mutableStateOf("") }
     var searchQuery = rememberSaveable { mutableStateOf("") }
+    var selectedSong: Song? by rememberSaveable { mutableStateOf(null) }
+    var showCreatePostDialog by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -200,9 +203,8 @@ fun GenAIScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Display search results as cards
-                    if (textResult != null && textResult.isNotEmpty()) {
-                        val songs = viewModel.parseSongs(textResult) // Parse the text results into Song objects
+                    if (!textResult.isNullOrEmpty()) {
+                        val songs = viewModel.parseSongs(textResult)
 
                         Text(
                             text = "Search Results:",
@@ -213,10 +215,7 @@ fun GenAIScreen(
                             items(songs) { song ->
                                 SongCard(
                                     song = song,
-                                    onClick = { selectedSong ->
-                                        // Handle song click
-                                        onSongSelected(selectedSong)
-                                    }
+                                    onClick = { selectedSong = song; showCreatePostDialog = true }
                                 )
                             }
                         }
@@ -261,7 +260,7 @@ fun GenAIScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Display recommendations as cards
-                    if (textResult != null && textResult.isNotEmpty()) {
+                    if (!textResult.isNullOrEmpty()) {
                         val songs = viewModel.parseSongs(textResult) // Parse the text results into Song objects
 
                         Text(
@@ -273,9 +272,9 @@ fun GenAIScreen(
                             items(songs) { song ->
                                 SongCard(
                                     song = song,
-                                    onClick = { selectedSong ->
+                                    onClick = { currentSong ->
                                         // Handle song click
-                                        onSongSelected(selectedSong)
+                                        selectedSong = currentSong
                                     }
                                 )
                             }
@@ -284,8 +283,23 @@ fun GenAIScreen(
                 }
             }
         }
+
+        // Show dialog when a song is selected
+        if (showCreatePostDialog && selectedSong != null) {
+            CreatePostDialog(
+                song = selectedSong!!,
+                onPostCreate = { title, body ->
+                    val newPost = Post(title = title, body = body, song = selectedSong!!)
+                    onPostCreated(newPost)  // Send the post to the MainScreen
+                    showCreatePostDialog = false
+                },
+                onDismiss = { showCreatePostDialog = false }
+            )
+        }
     }
-}
+    }
+
+
 
 @Composable
 fun SongCard(song: Song, onClick: (Song) -> Unit) {
@@ -306,4 +320,49 @@ fun SongCard(song: Song, onClick: (Song) -> Unit) {
     }
 }
 
+@Composable
+fun CreatePostDialog(
+    song: Song,
+    onPostCreate: (String, String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var postTitle by rememberSaveable { mutableStateOf("") }
+    var postBody by rememberSaveable { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Create Post") },
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = postTitle,
+                    onValueChange = { postTitle = it },
+                    label = { Text("Post Title") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = postBody,
+                    onValueChange = { postBody = it },
+                    label = { Text("Post Body") },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 4
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onPostCreate(postTitle, postBody)
+                onDismiss()
+            }) {
+                Text("Post")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
+}
 

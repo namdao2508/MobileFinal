@@ -70,6 +70,10 @@ class GenAIViewModel @Inject constructor(
         }
     }
 
+    fun createPost(title: String, body: String, song: Song) {
+
+    }
+
 
     // Clear Text Results
     fun clearTextResults() {
