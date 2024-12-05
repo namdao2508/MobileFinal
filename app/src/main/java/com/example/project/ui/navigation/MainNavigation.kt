@@ -6,4 +6,5 @@ sealed class Screen(val route: String) {
     object AddPost : Screen("add post")
     object GenAI : Screen("gen ai")
     object Main : Screen("main")
+    object Profile: Screen("Profile")
 }

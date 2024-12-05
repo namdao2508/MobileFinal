@@ -12,9 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,7 +45,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun GenAIScreen(
     viewModel: GenAIViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {},
+    onHome: () -> Unit = {},
+    onProfile: () -> Unit = {}
 ) {
     // State to control which screen is currently displayed
     var currentScreen by rememberSaveable { mutableStateOf("main") }
@@ -83,6 +89,42 @@ fun GenAIScreen(
                     }
                 }
             )
+        },
+
+                bottomBar = {
+            BottomAppBar(
+//                modifier = Modifier.height(56.dp), // Compact height
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.primary,
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    IconButton(
+                        onClick = { onHome() },
+                        modifier = Modifier.size(48.dp) // Explicit size for the button
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Home,
+                            contentDescription = "Home",
+                            modifier = Modifier.size(24.dp) // Size for the icon
+                        )
+                    }
+
+                    IconButton(
+                        onClick = { onProfile() },
+                        modifier = Modifier.size(48.dp) // Explicit size for the button
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Profile",
+                            modifier = Modifier.size(24.dp) // Size for the icon
+                        )
+                    }
+                }
+            }
         }
     ) { paddingValues ->
         when (currentScreen) {

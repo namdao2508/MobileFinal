@@ -22,6 +22,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.project.ui.screen.MainScreen
+import com.example.project.ui.screen.profile.ProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 //class MainActivity : ComponentActivity() {
@@ -80,23 +81,29 @@ fun NavGraph(
             MainScreen(
                 onAddPost = {
                     navController.navigate(Screen.GenAI.route)
+                },
+                onProfile = {
+                    navController.navigate(Screen.Profile.route)
+                }
+            )
+        }
+        composable(Screen.GenAI.route) {
+            GenAIScreen(
+                onBack = {
+                    navController.navigate(Screen.Main.route)
+                },
+                onHome = {
+                    navController.navigate(Screen.Main.route)
+                },
+                onProfile = {
+                    navController.navigate(Screen.Profile.route)
                 }
             )
         }
 
-//        composable(Screen.Messages.route) {
-//            MessagesScreen(
-//                onWriteMessageClick = {
-//                    navController.navigate(Screen.WritePost.route)
-//                }
-//            )
-//        }
-//        composable(Screen.WritePost.route) {
-//            WriteMessageScreen()
-//        }
-        composable(Screen.GenAI.route) {
-            GenAIScreen(
-                onBack = {
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onHome = {
                     navController.navigate(Screen.Main.route)
                 }
             )

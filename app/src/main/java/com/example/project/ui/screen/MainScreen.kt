@@ -55,7 +55,8 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun MainScreen(
 //    messagesViewModel: MessagesViewModel = viewModel(),
-    onAddPost: () -> Unit = {}
+    onAddPost: () -> Unit = {},
+    onProfile: () -> Unit = {}
 ) {
 //    val postListState = messagesViewModel.postsList().collectAsState(
 //        initial = MessagesUIState.Init)
@@ -102,19 +103,9 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    IconButton(
-                        onClick = { /* Go to Home screen */ },
-                        modifier = Modifier.size(48.dp) // Explicit size for the button
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Home,
-                            contentDescription = "Home",
-                            modifier = Modifier.size(24.dp) // Size for the icon
-                        )
-                    }
 
                     IconButton(
-                        onClick = { /* Go to Profile screen */ },
+                        onClick = { onProfile() },
                         modifier = Modifier.size(48.dp) // Explicit size for the button
                     ) {
                         Icon(
@@ -132,104 +123,11 @@ fun MainScreen(
     ) { paddingValues ->
 
         Column(modifier = Modifier.padding(paddingValues)) {
-//            if (postListState.value == MessagesUIState.Init) {
-//                Text(text = "Initializing..")
-//            }
-//            else if (postListState.value == MessagesUIState.Loading) {
-//                CircularProgressIndicator()
-//            } else if (postListState.value is MessagesUIState.Success) {
-//                // show messages in a list...
-//                LazyColumn() {
-//                    items((postListState.value as MessagesUIState.Success).postList){
-//                        PostCard(
-//                            post = it.post,
-//                            onRemoveItem = {
-//                                messagesViewModel.deletePost(it.postId)
-//                            },
-//                            currentUserId = FirebaseAuth.getInstance().uid!!
-//                        )
-//                    }
-//                }
-//
-//            } else if (postListState.value is MessagesUIState.Error) {
-//                // show error...
-//            }
-
         }
 
     }
 }
 
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun PostCard(
-//    post: Post,
-//    onRemoveItem: () -> Unit = {},
-//    currentUserId: String = ""
-//) {
-//    val zoomState = rememberZoomState()
-//
-//    Card(
-//        colors = CardDefaults.cardColors(
-//            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-//        ),
-//        shape = RoundedCornerShape(20.dp),
-//        elevation = CardDefaults.cardElevation(
-//            defaultElevation = 10.dp
-//        ),
-//        modifier = Modifier.padding(5.dp).zoomable(zoomState)
-//    ) {
-//        Column(
-//            modifier = Modifier
-//                .padding(10.dp)
-//        ) {
-//            Row(
-//                modifier = Modifier.padding(20.dp),
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Column(
-//                    modifier = Modifier
-//                        .weight(1f)
-//                ) {
-//                    Text(
-//                        text = "How I'm Feeling...",
-//                    )
-//                    Text(
-//                        text = post.body, // Song artist, title, album cover
-//                    )
-//                }
-//                Row(
-//                    verticalAlignment = Alignment.CenterVertically
-//                ) {
-//                    if (currentUserId.equals(post.uid)) {
-//                        Icon(
-//                            imageVector = Icons.Filled.Delete,
-//                            contentDescription = "Delete",
-//                            modifier = Modifier.clickable {
-//                                onRemoveItem()
-//                            },
-//                            tint = Color.Red
-//                        )
-//                    }
-//                }
-//            }
-//
-//            //if (post.imgUrl.isNotEmpty()) {
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    //.data(post.imgUrl)
-//                    .data("https://firebasestorage.googleapis.com/v0/b/aitforum2024springpeter.appspot.com/o/images%2F02167560-0218-41df-9cbb-cb9787aad275.jpg?alt=media&token=08be5fa2-a202-4f27-9c58-d799b12fe7b2")
-//                    .crossfade(true)
-//                    .build(),
-//                contentDescription = "Image",
-//                contentScale = ContentScale.Fit,
-//                modifier = Modifier.size(80.dp).zoomable(zoomState)
-//            )
-//            //}
-//        }
-//    }
-//}
 
 
 
