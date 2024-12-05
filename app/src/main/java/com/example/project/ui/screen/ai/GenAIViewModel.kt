@@ -22,7 +22,7 @@ class GenAIViewModel @Inject constructor(
 
     private val generativeModel = GenerativeModel(
         modelName = "gemini-pro",
-        apiKey = "APIKEY"
+        apiKey = "AIzaSyDH4TYDouCQxBXuk9ua3jHPlKwLYg0sNmg"
     )
 
     private val _textGenerationResult = MutableStateFlow<String?>(null)

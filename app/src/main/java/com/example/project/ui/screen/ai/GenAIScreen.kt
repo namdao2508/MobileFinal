@@ -71,8 +71,9 @@ fun GenAIScreen(
                                     currentScreen = "main"
                                     mood.value = ""
                                     searchQuery.value = ""
+                                }else{
+                                    onBack()
                                 }
-                                onBack()
                             },
                             modifier = Modifier.align(Alignment.CenterStart)
                         ) {
