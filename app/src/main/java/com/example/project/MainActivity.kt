@@ -105,6 +105,9 @@ fun NavGraph(
             ProfileScreen(
                 onHome = {
                     navController.navigate(Screen.Main.route)
+                },
+                onLogout = {
+                    navController.navigate(Screen.Login.route)
                 }
             )
         }

@@ -1,6 +1,7 @@
 package com.example.project.ui.screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,21 +23,38 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.project.ui.screen.ai.GenAIViewModel
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 
 
 @Composable
-fun ProfileScreen (
-//    viewModel: ProfileViewModel = viewModel<>(),
+fun ProfileScreen(
     modifier: Modifier = Modifier,
+    onLogout: () -> Unit = {},
     onHome: () -> Unit = {}
 ) {
-    Text("Profile Screen")
-
     Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // Log Out Button in top right corner
+                Button(
+                    onClick = { onLogout() },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(16.dp), // Padding from the edges
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error // Red color
+                    )
+                ) {
+                    Text("Log Out", color = MaterialTheme.colorScheme.onError) // Text in white
+                }
+            }
+        },
         bottomBar = {
             BottomAppBar(
-//                modifier = Modifier.height(56.dp), // Compact height
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.primary,
             ) {
@@ -47,27 +65,25 @@ fun ProfileScreen (
                 ) {
                     IconButton(
                         onClick = { onHome() },
-                        modifier = Modifier.size(48.dp) // Explicit size for the button
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Home,
                             contentDescription = "Home",
-                            modifier = Modifier.size(24.dp) // Size for the icon
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 }
             }
         }
-
     ) { paddingValues ->
-
         Column(modifier = Modifier.padding(paddingValues)) {
-
-
+            // Your profile content here
+            Text("Profile Screen", modifier = Modifier.padding(16.dp))
         }
-
     }
 }
+
 
 
 
