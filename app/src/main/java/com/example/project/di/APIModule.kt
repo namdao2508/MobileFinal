@@ -1,6 +1,5 @@
 package com.example.project.di
 
-import com.example.project.network.SpotifyApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -36,11 +35,5 @@ object SpotifyAPIModule {
             )
             .client(client)
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideSpotifyAPI(retrofit: Retrofit): SpotifyApiService {
-        return retrofit.create(SpotifyApiService::class.java)
     }
 }

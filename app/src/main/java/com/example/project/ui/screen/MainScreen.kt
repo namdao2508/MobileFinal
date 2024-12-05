@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -45,6 +46,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.project.data.songs.Song
+import com.example.project.ui.screen.ai.SongCard
 import com.google.firebase.auth.FirebaseAuth
 //import hu.bme.aut.aitforum.data.Post
 //import net.engawapg.lib.zoomable.rememberZoomState
@@ -54,25 +57,21 @@ import com.google.firebase.auth.FirebaseAuth
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-//    messagesViewModel: MessagesViewModel = viewModel(),
+    selectedSongs: List<Song> = listOf(),
     onAddPost: () -> Unit = {},
-    onProfile: () -> Unit = {}
+    onProfile: () -> Unit = {},
+    onSongClick: (Song) -> Unit = {}
 ) {
-//    val postListState = messagesViewModel.postsList().collectAsState(
-//        initial = MessagesUIState.Init)
-
-
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Vibe") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor =
-                    MaterialTheme.colorScheme.secondaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
                 actions = {
                     IconButton(
-                        onClick = {/*Go to Search screen*/}
+                        onClick = {/*Go to Search screen*/ }
                     ) {
                         Icon(Icons.Filled.Search, contentDescription = "Search For Friends")
                     }
@@ -81,9 +80,7 @@ fun MainScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    onAddPost()
-                }
+                onClick = { onAddPost() }
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -94,7 +91,6 @@ fun MainScreen(
         },
         bottomBar = {
             BottomAppBar(
-//                modifier = Modifier.height(56.dp), // Compact height
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.primary,
             ) {
@@ -103,30 +99,48 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-
                     IconButton(
                         onClick = { onProfile() },
-                        modifier = Modifier.size(48.dp) // Explicit size for the button
+                        modifier = Modifier.size(48.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = "Profile",
-                            modifier = Modifier.size(24.dp) // Size for the icon
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 }
             }
         }
-
-
-
     ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+        ) {
+            if (selectedSongs.isNotEmpty()) {
+                Text(
+                    text = "Selected Songs:",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
 
-        Column(modifier = Modifier.padding(paddingValues)) {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(selectedSongs) { song ->
+                        SongCard(song = song, onClick = {})
+                    }
+                }
+            } else {
+                Text(
+                    text = "Select a song to view details.",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
-
     }
 }
+
+
 
 
 

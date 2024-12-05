@@ -2,6 +2,7 @@ package com.example.project.ui.screen.ai
 
 import android.graphics.Paint.Align
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
@@ -20,6 +23,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,7 +35,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.project.data.songs.Song
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +54,8 @@ fun GenAIScreen(
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onHome: () -> Unit = {},
-    onProfile: () -> Unit = {}
+    onProfile: () -> Unit = {},
+    onSongSelected: (Song) -> Unit = {}
 ) {
     // State to control which screen is currently displayed
     var currentScreen by rememberSaveable { mutableStateOf("main") }
@@ -156,7 +164,6 @@ fun GenAIScreen(
             }
 
             "searchSongs" -> {
-                // Search screen layout
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -184,8 +191,7 @@ fun GenAIScreen(
 
                     Button(
                         onClick = {
-                            viewModel.searchSongs(query = searchQuery.value,
-                                accessToken = "YOUR_ACCESS_TOKEN")
+                            viewModel.searchSongs(query = searchQuery.value) // Trigger the search
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
@@ -194,17 +200,31 @@ fun GenAIScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    // Display search results as cards
                     if (textResult != null && textResult.isNotEmpty()) {
-                        Text("Search Results:")
-                        textResult.split("\n").forEach { song ->
-                            Text(text = "- $song", modifier = Modifier.padding(start = 16.dp))
+                        val songs = viewModel.parseSongs(textResult) // Parse the text results into Song objects
+
+                        Text(
+                            text = "Search Results:",
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(songs) { song ->
+                                SongCard(
+                                    song = song,
+                                    onClick = { selectedSong ->
+                                        // Handle song click
+                                        onSongSelected(selectedSong)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             }
 
             "recommendationsByMood" -> {
-                // Recommendations screen layout
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -231,7 +251,7 @@ fun GenAIScreen(
 
                     Button(
                         onClick = {
-                            viewModel.generateAI(mood = mood.value)
+                            viewModel.generateAI(mood = mood.value) // Trigger mood-based recommendations
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
@@ -240,10 +260,25 @@ fun GenAIScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
+                    // Display recommendations as cards
                     if (textResult != null && textResult.isNotEmpty()) {
-                        Text("Recommended Songs:")
-                        textResult.split("\n").forEach { song ->
-                            Text(text = "- $song", modifier = Modifier.padding(start = 16.dp))
+                        val songs = viewModel.parseSongs(textResult) // Parse the text results into Song objects
+
+                        Text(
+                            text = "Recommended Songs:",
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(songs) { song ->
+                                SongCard(
+                                    song = song,
+                                    onClick = { selectedSong ->
+                                        // Handle song click
+                                        onSongSelected(selectedSong)
+                                    }
+                                )
+                            }
                         }
                     }
                 }
@@ -251,3 +286,24 @@ fun GenAIScreen(
         }
     }
 }
+
+@Composable
+fun SongCard(song: Song, onClick: (Song) -> Unit) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable { onClick(song) }, // Trigger onClick when clicked
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(text = song.title, style = MaterialTheme.typography.bodyLarge)
+            Text(text = "By: ${song.artist}", style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+
