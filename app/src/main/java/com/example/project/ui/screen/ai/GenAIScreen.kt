@@ -65,6 +65,8 @@ fun GenAIScreen(
     onPostCreated: (Post) -> Unit = {} // Callback to send created post to MainScreen
 ) {
     val m = stringResource(R.string.main)
+    val search = "searchSongs"
+    val recommendations = "recommendationsByMood"
     var currentScreen by rememberSaveable { mutableStateOf(m) }
     var textResult = viewModel.textGenerationResult.collectAsState().value
     var mood = rememberSaveable { mutableStateOf("") }
