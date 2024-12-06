@@ -47,6 +47,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.project.data.database.posts.Post
 import com.example.project.data.songs.Song
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +64,7 @@ fun GenAIScreen(
     var textResult = viewModel.textGenerationResult.collectAsState().value
     var mood = rememberSaveable { mutableStateOf("") }
     var searchQuery = rememberSaveable { mutableStateOf("") }
-    var selectedSong: Song? by rememberSaveable { mutableStateOf(null) }
+    var selectedSong: Song? by remember { mutableStateOf<Song?>(null) }
     var showCreatePostDialog by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
@@ -298,8 +299,6 @@ fun GenAIScreen(
         }
     }
     }
-
-
 
 @Composable
 fun SongCard(song: Song, onClick: (Song) -> Unit) {
