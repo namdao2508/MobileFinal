@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -40,7 +41,7 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profile Screen") },
+                title = { Text("User Profile") },
                 actions = {
                     // Log Out Button in the top right corner
                     Button(
@@ -79,12 +80,22 @@ fun ProfileScreen(
             }
         }
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
-            // Your profile content here
-            Text("Profile Screen", modifier = Modifier.padding(16.dp))
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Profile Content
+            Text(
+                text = "Welcome to your Profile!",
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
+
 
 
 

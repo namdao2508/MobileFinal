@@ -288,23 +288,19 @@ fun GenAIScreen(
             }
         }
 
+        // Show dialog when a song is selected
         if (showCreatePostDialog && selectedSong != null) {
             CreatePostDialog(
                 song = selectedSong!!,
                 onPostCreate = { newPost ->
-                    mainViewModel.addPost(newPost) // Add the post to MainViewModel
+                    mainViewModel.addPost(newPost)
                     showCreatePostDialog = false
                 },
-                onDismiss = { showCreatePostDialog = false },
-                onNavigateToHome = {
-                    showCreatePostDialog = false
-                    onHome() // Navigate to Home
-                }
+                onDismiss = { showCreatePostDialog = false }
             )
         }
-
     }
-}
+    }
 
 @Composable
 fun SongCard(song: Song, onClick: (Song) -> Unit) {
@@ -330,7 +326,8 @@ fun CreatePostDialog(
     song: Song,
     onPostCreate: (Post) -> Unit,
     onDismiss: () -> Unit,
-    onNavigateToHome: () -> Unit
+
+
 ) {
     var postTitle by rememberSaveable { mutableStateOf("") }
     var postBody by rememberSaveable { mutableStateOf("") }
@@ -365,7 +362,7 @@ fun CreatePostDialog(
                     artist = song.artist
                 )
                 onPostCreate(newPost)
-                onNavigateToHome()
+
             }) {
                 Text("Post")
             }
