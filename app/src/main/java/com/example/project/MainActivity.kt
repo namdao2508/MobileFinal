@@ -25,8 +25,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.project.data.posts.Post
 import com.example.project.ui.screen.MainScreen
-import com.example.project.ui.screen.ai.Post
 import com.example.project.ui.screen.profile.ProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
 

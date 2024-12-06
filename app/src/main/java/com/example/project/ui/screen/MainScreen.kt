@@ -47,8 +47,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.project.data.posts.Post
 import com.example.project.data.songs.Song
-import com.example.project.ui.screen.ai.Post
 import com.example.project.ui.screen.ai.SongCard
 import com.google.firebase.auth.FirebaseAuth
 //import hu.bme.aut.aitforum.data.Post
@@ -61,18 +61,19 @@ fun MainScreen(
     posts: List<Post> = listOf(),
     onAddPost: () -> Unit = {},
     onProfile: () -> Unit = {},
-    onSongClick: (Song) -> Unit = {}
+    onSongClick: (Song) -> Unit = {},
+    onPostCreated: (Post) -> Unit = {} // Callback for creating a new post
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Vibe") },
+                title = { Text("InTune") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
                 actions = {
                     IconButton(
-                        onClick = {/*Go to Search screen*/ }
+                        onClick = { /* Navigate to search screen */ }
                     ) {
                         Icon(Icons.Filled.Search, contentDescription = "Search For Friends")
                     }
@@ -81,7 +82,7 @@ fun MainScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onAddPost() }
+                onClick = { onAddPost() } // Open Add Post dialog
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
@@ -128,7 +129,7 @@ fun MainScreen(
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(posts) { post ->
-                        PostCard(post = post) // Custom PostCard to display title, body, and song info
+                        PostCard(post = post) // Display posts in cards
                     }
                 }
             } else {

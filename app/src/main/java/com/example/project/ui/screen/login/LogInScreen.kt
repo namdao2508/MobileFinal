@@ -59,7 +59,7 @@ fun LogInScreen(
 
     Box(modifier = modifier) {
         Text(
-            text = "Vibe",
+            text = "InTune",
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 50.dp),
