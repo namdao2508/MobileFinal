@@ -1,5 +1,6 @@
 package com.example.project.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -114,7 +116,8 @@ fun MainScreen(
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(mainViewModel.posts) { post ->
-                        PostCard(post = post)
+                        PostCard(post = post,
+                            onRemovePost = { mainViewModel.removePost(post)})
                     }
                 }
             } else {
@@ -128,16 +131,30 @@ fun MainScreen(
 }
 
 @Composable
-fun PostCard(post: Post) {
+fun PostCard(post: Post,
+             onRemovePost: (Post) -> Unit)
+ {
     Card(
         modifier = Modifier.fillMaxWidth().padding(8.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = post.title, style = MaterialTheme.typography.bodyLarge)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = post.body)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Song: ${post.song.title} by ${post.song.artist}")
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(text = post.title, style = MaterialTheme.typography.bodyLarge)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = post.body)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Song: ${post.song.title} by ${post.song.artist}")
+            }
+
+            Icon(
+                imageVector = Icons.Filled.Clear,
+                contentDescription = "Delete",
+                modifier = Modifier.clickable { onRemovePost(post) },
+                tint = Color.Red
+            )
         }
     }
 }

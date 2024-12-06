@@ -49,11 +49,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.project.data.database.posts.Post
 import com.example.project.data.songs.Song
+import com.example.project.ui.DataManager
+import com.example.project.ui.screen.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenAIScreen(
     viewModel: GenAIViewModel = hiltViewModel(),
+    MainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onHome: () -> Unit = {},
@@ -275,7 +278,8 @@ fun GenAIScreen(
                                     song = song,
                                     onClick = { currentSong ->
                                         // Handle song click
-                                        selectedSong = currentSong
+                                        selectedSong = currentSong;
+                                        showCreatePostDialog = true
                                     }
                                 )
                             }
@@ -291,7 +295,9 @@ fun GenAIScreen(
                 song = selectedSong!!,
                 onPostCreate = { title, body ->
                     val newPost = Post(title = title, body = body, song = selectedSong!!)
-                    onPostCreated(newPost)  // Send the post to the MainScreen
+//                    MainViewModel.addPost(newPost) // Add the post to the MainViewModel
+//                    onPostCreated(newPost)  // Send the post to the MainScreen
+                    DataManager.posts.plus(newPost)
                     showCreatePostDialog = false
                 },
                 onDismiss = { showCreatePostDialog = false }

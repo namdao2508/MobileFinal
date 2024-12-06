@@ -4,12 +4,24 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 //import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import com.example.project.ui.screen.ai.GenAIScreen
 import com.example.project.ui.screen.login.LogInScreen
@@ -25,6 +37,7 @@ import com.example.project.ui.screen.MainScreen
 import com.example.project.ui.screen.MainViewModel
 import com.example.project.ui.screen.profile.ProfileScreen
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 //class MainActivity : ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,17 +78,30 @@ class MainActivity : ComponentActivity() {
 fun NavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    mainViewModel: MainViewModel = viewModel()
+    mainViewModel: MainViewModel = viewModel(),
 
+//) {
+//
+//
+//    NavHost(
+//        modifier = modifier,
+//        navController = navController,
+//        startDestination = Screen.Login.route
+//    ) {
+//
+ startDestination: String = "splash"
 ) {
-
-//    var posts by rememberSaveable { mutableStateOf<List<Post>>(emptyList()) }
-
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = Screen.Login.route
+    NavHost(navController = navController, startDestination = startDestination
     ) {
+        composable("splash") {
+            SplashScreen(navController) // Display splash page first
+        }
+
+//        composable("Main") {
+//            MainScreen()
+//        }
+
+
         composable(Screen.Login.route) {
             LogInScreen(
                 onLoginSuccess = {
@@ -106,7 +132,7 @@ fun NavGraph(
                 },
                 onPostCreated = { post ->
                     // Add post to ViewModel or handle navigation back to MainScreen
-                    mainViewModel.addPost(post)
+//                    mainViewModel.addPost(post)
                     navController.popBackStack() // Navigate back to MainScreen
 
                 }
@@ -121,6 +147,39 @@ fun NavGraph(
                 onLogout = {
                     navController.navigate(Screen.Login.route)
                 }
+            )
+        }
+    }
+}
+
+@Composable
+fun SplashScreen(navController: NavController) {
+    LaunchedEffect(Unit) {
+        delay(3000) // 3-second delay
+        navController.navigate("login") {
+            popUpTo("splash") { inclusive = true }
+        }
+    }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "InTune",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.applogo),
+                contentDescription = "App logo",
+                modifier = Modifier
+                    .size(200.dp)
+                    .padding(16.dp)
             )
         }
     }
