@@ -29,6 +29,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
+import androidx.compose.ui.res.stringResource
+import com.example.project.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +43,7 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("User Profile") },
+                title = { Text(stringResource(R.string.user_profile)) },
                 actions = {
                     // Log Out Button in the top right corner
                     Button(
@@ -51,7 +53,7 @@ fun ProfileScreen(
                         ),
                         modifier = Modifier.padding(end = 8.dp) // Add padding to the right
                     ) {
-                        Text("Log Out", color = MaterialTheme.colorScheme.onError) // Text in white
+                        Text(stringResource(R.string.log_out), color = MaterialTheme.colorScheme.onError) // Text in white
                     }
                 }
             )
@@ -72,7 +74,7 @@ fun ProfileScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Home,
-                            contentDescription = "Home",
+                            contentDescription = stringResource(R.string.home),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -89,7 +91,7 @@ fun ProfileScreen(
         ) {
             // Profile Content
             Text(
-                text = "Welcome to your Profile!",
+                text = stringResource(R.string.welcome_to_your_profile),
                 modifier = Modifier.padding(16.dp)
             )
         }

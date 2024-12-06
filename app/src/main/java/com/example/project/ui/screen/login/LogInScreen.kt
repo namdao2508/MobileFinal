@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -73,7 +74,7 @@ fun LogInScreen(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.applogo),
-                contentDescription = "App Logo",
+                contentDescription = stringResource(R.string.app_logo),
                 modifier = Modifier
                     .size(120.dp) // Adjust size as needed
                     .padding(bottom = 16.dp)
@@ -85,7 +86,7 @@ fun LogInScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(0.8f),
                 label = {
-                    Text(text = "E-mail")
+                    Text(text = stringResource(R.string.e_mail))
                 },
                 value = email,
                 onValueChange = { email = it },
@@ -96,7 +97,7 @@ fun LogInScreen(
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(0.8f),
                 label = {
-                    Text(text = "Password")
+                    Text(text = stringResource(R.string.password))
                 },
                 value = password,
                 onValueChange = { password = it },
@@ -104,7 +105,9 @@ fun LogInScreen(
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     val image = if (passwordVisible) Icons.Default.Info else Icons.Default.Info
-                    val description = if (passwordVisible) "Hide password" else "Show password"
+                    val description = if (passwordVisible) stringResource(R.string.hide_password) else stringResource(
+                        R.string.show_password
+                    )
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(imageVector = image, contentDescription = description)
                     }
@@ -126,7 +129,7 @@ fun LogInScreen(
                     .fillMaxWidth(0.8f)
                     .padding(vertical = 16.dp)
             ) {
-                Text(text = "Log in")
+                Text(text = stringResource(R.string.log_in))
             }
 
             // Sign Up Prompt
@@ -134,7 +137,7 @@ fun LogInScreen(
                 onClick = { showCreateAccountDialog = true },
                 modifier = Modifier.padding(top = 8.dp)
             ) {
-                Text(text = "Don't have an account? Sign up")
+                Text(text = stringResource(R.string.don_t_have_an_account_sign_up))
             }
         }
 
@@ -152,10 +155,10 @@ fun LogInScreen(
                     CircularProgressIndicator()
                 }
                 is LoginUiState.RegisterSuccess -> {
-                    Text("Registration Successful")
+                    Text(stringResource(R.string.registration_successful))
                 }
                 is LoginUiState.LoginSuccess -> {
-                    Text("Login Successful")
+                    Text(stringResource(R.string.login_successful))
                 }
                 is LoginUiState.Error -> {
                     Text(
@@ -194,14 +197,14 @@ fun CreateAccountDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Create Account") },
+        title = { Text(stringResource(R.string.create_account)) },
         text = {
             Column {
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.name)) },
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -209,7 +212,7 @@ fun CreateAccountDialog(
                     modifier = Modifier.fillMaxWidth(),
                     value = username,
                     onValueChange = { username = it },
-                    label = { Text("Username") },
+                    label = { Text(stringResource(R.string.username)) },
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -217,7 +220,7 @@ fun CreateAccountDialog(
                     modifier = Modifier.fillMaxWidth(),
                     value = password,
                     onValueChange = { password = it },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.password)) },
                     singleLine = true,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
@@ -231,7 +234,7 @@ fun CreateAccountDialog(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "Profile Picture",
+                    text = stringResource(R.string.profile_picture),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .fillMaxWidth(), // Ensures the Text fills the available width
@@ -252,12 +255,12 @@ fun CreateAccountDialog(
                     onAccountCreated(username, password, name, profilePicUri)
                 }
             ) {
-                Text("Create Account")
+                Text(stringResource(R.string.create_account))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     )
@@ -298,14 +301,14 @@ fun ImagePicker(
             if (selectedImageUri != null) {
                 AsyncImage(
                     model = selectedImageUri,
-                    contentDescription = "Selected Image",
+                    contentDescription = stringResource(R.string.selected_image),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             } else {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
-                    contentDescription = "Account Icon",
+                    contentDescription = stringResource(R.string.account_icon),
                     modifier = Modifier.size(100.dp), // Match the circle size
                     tint = Color.Gray
                 )
