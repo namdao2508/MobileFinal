@@ -31,8 +31,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.project.data.posts.Post
@@ -45,12 +48,13 @@ import com.example.project.data.songs.Song
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = viewModel(),
+    mainViewModel: MainViewModel = hiltViewModel(),
     posts: List<Post> = listOf(),
     onAddPost: () -> Unit = {},
     onProfile: () -> Unit = {},
     onSongClick: (Song) -> Unit = {}
 ) {
+    val postsList by mainViewModel.getAllPosts().collectAsState(emptyList())
     Scaffold(
         topBar = {
             TopAppBar(
@@ -109,14 +113,14 @@ fun MainScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            if (mainViewModel.posts.isNotEmpty()) {
+            if (postsList.isNotEmpty()) {
                 Text(
                     text = "Posts:",
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(mainViewModel.posts) { post ->
+                    items(postsList) { post ->
                         PostCard(post = post,
                             onRemovePost = { mainViewModel.removePost(post)})
                     }
@@ -147,7 +151,7 @@ fun PostCard(post: Post,
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(text = post.body)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "Song: ${post.song.title} by ${post.song.artist}")
+                Text(text = "Song: ${post.songTitle} by ${post.artist}")
             }
 
             Icon(

@@ -11,5 +11,6 @@ data class Post(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "title")val title: String,
     @ColumnInfo(name = "body")val body: String,
-    @ColumnInfo(name = "song")val song: Song,
+    @ColumnInfo(name = "song")val songTitle: String,
+    @ColumnInfo(name = "artist")val artist: String,
 ) : Serializable

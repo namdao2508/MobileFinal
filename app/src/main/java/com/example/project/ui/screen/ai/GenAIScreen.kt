@@ -55,7 +55,7 @@ import com.example.project.ui.screen.MainViewModel
 @Composable
 fun GenAIScreen(
     viewModel: GenAIViewModel = hiltViewModel(),
-    MainViewModel: MainViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
     onHome: () -> Unit = {},
@@ -292,11 +292,8 @@ fun GenAIScreen(
         if (showCreatePostDialog && selectedSong != null) {
             CreatePostDialog(
                 song = selectedSong!!,
-                onPostCreate = { title, body ->
-                    val newPost = Post(title = title, body = body, song = selectedSong!!)
-//                    MainViewModel.addPost(newPost) // Add the post to the MainViewModel
-                    //viewModel.createPost(title, body, selectedSong!!) // Add the post to the GenAIViewModel(newPost)  // Send the post to the MainScreen
-                    //DataManager.posts.plus(newPost)
+                onPostCreate = { newPost ->
+                    mainViewModel.addPost(newPost)
                     showCreatePostDialog = false
                 },
                 onDismiss = { showCreatePostDialog = false }
@@ -327,8 +324,10 @@ fun SongCard(song: Song, onClick: (Song) -> Unit) {
 @Composable
 fun CreatePostDialog(
     song: Song,
-    onPostCreate: (String, String) -> Unit,
-    onDismiss: () -> Unit
+    onPostCreate: (Post) -> Unit,
+    onDismiss: () -> Unit,
+
+
 ) {
     var postTitle by rememberSaveable { mutableStateOf("") }
     var postBody by rememberSaveable { mutableStateOf("") }
@@ -356,8 +355,16 @@ fun CreatePostDialog(
         },
         confirmButton = {
             TextButton(onClick = {
-                onPostCreate(postTitle, postBody)
-                onDismiss()
+                val newPost = Post(
+                    title = postTitle,
+                    body = postBody,
+                    songTitle = song.title,
+                    artist = song.artist
+                )
+                onPostCreate(newPost)
+//                onDismiss() // Dismiss the dialog
+//                onPostCreate(postTitle, postBody)
+//                onDismiss()
             }) {
                 Text("Post")
             }

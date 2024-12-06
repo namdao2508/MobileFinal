@@ -34,6 +34,7 @@ firebaseAuth = "23.1.0"
 navigationRuntimeKtx = "2.7.7"
 androidthings = "1.0"
 
+
 [libraries]
 generativeai = {group="com.google.ai.client.generativeai", name="generativeai", version.ref="generativeai"}
 #spotify = {group = "com.spotify.android", name = "spotify", version.ref = "spotify"}
@@ -75,7 +76,6 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 androidx-foundation-layout-android = { group = "androidx.compose.foundation", name = "foundation-layout-android", version.ref = "foundationLayoutAndroid" }
-
 
 
 [plugins]

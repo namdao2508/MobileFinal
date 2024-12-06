@@ -73,7 +73,7 @@ class GenAIViewModel @Inject constructor(
     }
 
     suspend fun createPost(title: String, body: String, song: Song) {
-        postDao.insert(Post(title = title, body = body, song = song))
+        postDao.insert(Post(title = title, body = body, songTitle = song.title, artist = song.artist))
     }
 
 
