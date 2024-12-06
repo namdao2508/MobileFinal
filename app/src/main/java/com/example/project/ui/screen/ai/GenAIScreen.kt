@@ -47,9 +47,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.project.data.database.posts.Post
+import com.example.project.data.posts.Post
 import com.example.project.data.songs.Song
-import com.example.project.ui.DataManager
 import com.example.project.ui.screen.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -296,8 +295,8 @@ fun GenAIScreen(
                 onPostCreate = { title, body ->
                     val newPost = Post(title = title, body = body, song = selectedSong!!)
 //                    MainViewModel.addPost(newPost) // Add the post to the MainViewModel
-//                    onPostCreated(newPost)  // Send the post to the MainScreen
-                    DataManager.posts.plus(newPost)
+                    //viewModel.createPost(title, body, selectedSong!!) // Add the post to the GenAIViewModel(newPost)  // Send the post to the MainScreen
+                    //DataManager.posts.plus(newPost)
                     showCreatePostDialog = false
                 },
                 onDismiss = { showCreatePostDialog = false }

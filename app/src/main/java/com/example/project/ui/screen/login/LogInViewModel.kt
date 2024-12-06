@@ -72,7 +72,7 @@ class LogInViewModel : ViewModel() {
         auth = Firebase.auth
     }
 
-    fun registerUser(email: String, password: String) {
+    fun registerUser(email: String, password: String, name: String, toString: String) {
         loginUiState = LoginUiState.Loading
         try {
             auth.createUserWithEmailAndPassword(email, password)

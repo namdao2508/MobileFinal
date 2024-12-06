@@ -95,7 +95,8 @@ fun MainScreen(
                         Icon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = "Profile",
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                     }
                 }

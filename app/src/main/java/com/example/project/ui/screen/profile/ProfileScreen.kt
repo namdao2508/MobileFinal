@@ -25,9 +25,12 @@ import com.example.project.ui.screen.ai.GenAIViewModel
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
@@ -36,22 +39,21 @@ fun ProfileScreen(
 ) {
     Scaffold(
         topBar = {
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Log Out Button in top right corner
-                Button(
-                    onClick = { onLogout() },
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(16.dp), // Padding from the edges
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error // Red color
-                    )
-                ) {
-                    Text("Log Out", color = MaterialTheme.colorScheme.onError) // Text in white
+            TopAppBar(
+                title = { Text("Profile Screen") },
+                actions = {
+                    // Log Out Button in the top right corner
+                    Button(
+                        onClick = { onLogout() },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.error // Red color
+                        ),
+                        modifier = Modifier.padding(end = 8.dp) // Add padding to the right
+                    ) {
+                        Text("Log Out", color = MaterialTheme.colorScheme.onError) // Text in white
+                    }
                 }
-            }
+            )
         },
         bottomBar = {
             BottomAppBar(

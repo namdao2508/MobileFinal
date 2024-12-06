@@ -3,6 +3,8 @@ package com.example.project.ui.screen.ai
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.project.data.posts.Post
+import com.example.project.data.posts.PostDao
 import com.example.project.data.songs.Song
 import com.google.ai.client.generativeai.GenerativeModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GenAIViewModel @Inject constructor(
-    @ApplicationContext val context: Context
+    val postDao: PostDao
 ) : ViewModel() {
 
 
@@ -70,8 +72,8 @@ class GenAIViewModel @Inject constructor(
         }
     }
 
-    fun createPost(title: String, body: String, song: Song) {
-
+    suspend fun createPost(title: String, body: String, song: Song) {
+        postDao.insert(Post(title = title, body = body, song = song))
     }
 
 

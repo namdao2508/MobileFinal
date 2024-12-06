@@ -132,7 +132,7 @@ fun NavGraph(
                 },
                 onPostCreated = { post ->
                     // Add post to ViewModel or handle navigation back to MainScreen
-//                    mainViewModel.addPost(post)
+                    mainViewModel.addPost(post)
                     navController.popBackStack() // Navigate back to MainScreen
 
                 }
@@ -169,13 +169,9 @@ fun SplashScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "InTune",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+
             Image(
-                painter = painterResource(id = R.drawable.applogo),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App logo",
                 modifier = Modifier
                     .size(200.dp)

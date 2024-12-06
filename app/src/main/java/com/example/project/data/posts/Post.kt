@@ -1,11 +1,15 @@
 package com.example.project.data.posts
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.project.data.songs.Song
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
-@Serializable
+@Entity(tableName = "posttable")
 data class Post(
-    val title: String,
-    val body: String,
-    val song: Song
-)
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "title")val title: String,
+    @ColumnInfo(name = "body")val body: String,
+    @ColumnInfo(name = "song")val song: Song,
+) : Serializable
