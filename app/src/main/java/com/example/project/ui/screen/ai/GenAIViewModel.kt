@@ -20,7 +20,6 @@ class GenAIViewModel @Inject constructor(
     val postDao: PostDao
 ) : ViewModel() {
 
-
     private val generativeModel = GenerativeModel(
         modelName = "gemini-pro",
         apiKey = "AIzaSyDH4TYDouCQxBXuk9ua3jHPlKwLYg0sNmg"

@@ -47,4 +47,6 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="selected_image">Selected Image</string>
     <string name="account_icon">Account Icon</string>
+    <string name="searchsongs">searchSongs</string>
+    <string name="recommendationsbymood">recommendationsByMood</string>
 </resources>

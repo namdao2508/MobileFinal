@@ -65,8 +65,8 @@ fun GenAIScreen(
     onPostCreated: (Post) -> Unit = {} // Callback to send created post to MainScreen
 ) {
     val m = stringResource(R.string.main)
-    val search = "searchSongs"
-    val recommendations = "recommendationsByMood"
+    val search = stringResource(R.string.searchsongs)
+    val recommendations = stringResource(R.string.recommendationsbymood)
     var currentScreen by rememberSaveable { mutableStateOf(m) }
     var textResult = viewModel.textGenerationResult.collectAsState().value
     var mood = rememberSaveable { mutableStateOf("") }
@@ -148,7 +148,7 @@ fun GenAIScreen(
         }
     ) { paddingValues ->
         when (currentScreen) {
-            "main" -> {
+            m -> {
                 // Main screen layout
                 Column(
                     modifier = modifier
@@ -157,7 +157,7 @@ fun GenAIScreen(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { currentScreen = "searchSongs" },
+                        onClick = { currentScreen = search },
                         modifier = Modifier.fillMaxWidth(0.8f)
                     ) {
                         Text(stringResource(R.string.search_songs))
@@ -166,7 +166,7 @@ fun GenAIScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
-                        onClick = { currentScreen = "recommendationsByMood"},
+                        onClick = { currentScreen = recommendations },
                         modifier = Modifier.fillMaxWidth(0.8f)
                     ) {
                         Text(stringResource(R.string.song_recommendations_by_mood))
@@ -174,7 +174,7 @@ fun GenAIScreen(
                 }
             }
 
-            "searchSongs" -> {
+            search -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -231,7 +231,7 @@ fun GenAIScreen(
                 }
             }
 
-            "recommendationsByMood" -> {
+            recommendations -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
