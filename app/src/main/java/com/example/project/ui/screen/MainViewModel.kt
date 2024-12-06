@@ -2,7 +2,7 @@ package com.example.project.ui.screen
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.example.project.data.database.posts.Post
+import com.example.project.data.posts.Post
 import com.example.project.ui.DataManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

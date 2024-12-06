@@ -35,7 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.project.data.database.posts.Post
+import com.example.project.data.posts.Post
 import com.example.project.data.songs.Song
 
 //import hu.bme.aut.aitforum.data.Post
