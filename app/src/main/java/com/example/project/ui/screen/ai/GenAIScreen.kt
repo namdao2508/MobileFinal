@@ -44,9 +44,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.project.R
 import com.example.project.data.posts.Post
 import com.example.project.data.songs.Song
 import com.example.project.ui.screen.MainViewModel
@@ -62,7 +64,8 @@ fun GenAIScreen(
     onProfile: () -> Unit = {},
     onPostCreated: (Post) -> Unit = {} // Callback to send created post to MainScreen
 ) {
-    var currentScreen by rememberSaveable { mutableStateOf("main") }
+    val m = stringResource(R.string.main)
+    var currentScreen by rememberSaveable { mutableStateOf(m) }
     var textResult = viewModel.textGenerationResult.collectAsState().value
     var mood = rememberSaveable { mutableStateOf("") }
     var searchQuery = rememberSaveable { mutableStateOf("") }
@@ -80,9 +83,9 @@ fun GenAIScreen(
                     ) {
                         IconButton(
                             onClick = {
-                                if (currentScreen != "main") {
+                                if (currentScreen != m) {
                                     viewModel.clearTextResults() // Clear textResults on back
-                                    currentScreen = "main"
+                                    currentScreen = m
                                     mood.value = ""
                                     searchQuery.value = ""
                                 }else{
@@ -93,12 +96,12 @@ fun GenAIScreen(
                         ) {
                             Icon(
                                 Icons.Default.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
                             )
                         }
 
                         Text(
-                            text = "New Post",
+                            text = stringResource(R.string.new_post),
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -123,7 +126,7 @@ fun GenAIScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Home,
-                            contentDescription = "Home",
+                            contentDescription = stringResource(R.string.home),
                             modifier = Modifier.size(24.dp) // Size for the icon
                         )
                     }
@@ -134,7 +137,7 @@ fun GenAIScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Person,
-                            contentDescription = "Profile",
+                            contentDescription = stringResource(R.string.profile),
                             modifier = Modifier.size(24.dp) // Size for the icon
                         )
                     }
@@ -155,7 +158,7 @@ fun GenAIScreen(
                         onClick = { currentScreen = "searchSongs" },
                         modifier = Modifier.fillMaxWidth(0.8f)
                     ) {
-                        Text("Search Songs")
+                        Text(stringResource(R.string.search_songs))
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -164,7 +167,7 @@ fun GenAIScreen(
                         onClick = { currentScreen = "recommendationsByMood"},
                         modifier = Modifier.fillMaxWidth(0.8f)
                     ) {
-                        Text("Song Recommendations by Mood")
+                        Text(stringResource(R.string.song_recommendations_by_mood))
                     }
                 }
             }
@@ -184,11 +187,11 @@ fun GenAIScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 8.dp),
-                        label = { Text("What song do you want to search?") },
+                        label = { Text(stringResource(R.string.what_song_do_you_want_to_search)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Search,
-                                contentDescription = "Search Icon"
+                                contentDescription = stringResource(R.string.search_icon)
                             )
                         }
                     )
@@ -201,7 +204,7 @@ fun GenAIScreen(
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
-                        Text("Search Song")
+                        Text(stringResource(R.string.search_song))
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -210,7 +213,7 @@ fun GenAIScreen(
                         val songs = viewModel.parseSongs(textResult)
 
                         Text(
-                            text = "Search Results:",
+                            text = stringResource(R.string.search_results),
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
 
@@ -240,11 +243,11 @@ fun GenAIScreen(
                             .padding(vertical = 8.dp),
                         value = mood.value,
                         onValueChange = { mood.value = it },
-                        label = { Text("Enter your mood") },
+                        label = { Text(stringResource(R.string.enter_your_mood)) },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Default.Search,
-                                contentDescription = "Search Icon"
+                                contentDescription = stringResource(R.string.search_icon)
                             )
                         }
                     )
@@ -257,7 +260,7 @@ fun GenAIScreen(
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {
-                        Text("Get Song Recommendations")
+                        Text(stringResource(R.string.get_song_recommendations))
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -267,7 +270,7 @@ fun GenAIScreen(
                         val songs = viewModel.parseSongs(textResult) // Parse the text results into Song objects
 
                         Text(
-                            text = "Recommended Songs:",
+                            text = stringResource(R.string.recommended_songs),
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
 
@@ -316,7 +319,7 @@ fun SongCard(song: Song, onClick: (Song) -> Unit) {
                 .padding(16.dp)
         ) {
             Text(text = song.title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = "By: ${song.artist}", style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(R.string.by, song.artist), style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
@@ -334,20 +337,20 @@ fun CreatePostDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Create Post") },
+        title = { Text(stringResource(R.string.create_post)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = postTitle,
                     onValueChange = { postTitle = it },
-                    label = { Text("Post Title") },
+                    label = { stringResource(R.string.post_title) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = postBody,
                     onValueChange = { postBody = it },
-                    label = { Text("Post Body") },
+                    label = { stringResource(R.string.post_body) },
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 4
                 )
@@ -362,16 +365,14 @@ fun CreatePostDialog(
                     artist = song.artist
                 )
                 onPostCreate(newPost)
-//                onDismiss() // Dismiss the dialog
-//                onPostCreate(postTitle, postBody)
-//                onDismiss()
+
             }) {
-                Text("Post")
+                Text(stringResource(R.string.post))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.cancel))
             }
         }
     )
